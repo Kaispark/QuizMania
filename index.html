@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizMania - Real-Time Knowledge Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="app-container">
+            <div class="app-header">
+                <div class="api-status">
+                    <span class="api-status-dot"></span>
+                    <span>API Connected</span>
+                </div>
+                <h1><i class="fas fa-brain"></i> QuizMania</h1>
+                <p>Real-Time Knowledge Challenge with Live Questions</p>
+            </div>
+            
+            <div class="app-body">
+                <!-- Loading Overlay -->
+                <div id="loading-overlay" class="loading-overlay">
+                    <div class="loading-spinner-large"></div>
+                    <div class="loading-text">Fetching questions from API...</div>
+                </div>
+                
+                <!-- Home Screen -->
+                <div id="home-screen" class="screen active">
+                    <div class="category-selector">
+                        <h3><i class="fas fa-list"></i> Select Category (Optional)</h3>
+                        <div class="category-grid" id="category-grid">
+                            <button class="category-btn" data-category="any">Any Category</button>
+                            <button class="category-btn" data-category="9">General Knowledge</button>
+                            <button class="category-btn" data-category="17">Science</button>
+                            <button class="category-btn" data-category="19">Mathematics</button>
+                            <button class="category-btn" data-category="21">Sports</button>
+                            <button class="category-btn" data-category="22">Geography</button>
+                            <button class="category-btn" data-category="23">History</button>
+                            <button class="category-btn" data-category="24">Politics</button>
+                            <button class="category-btn" data-category="25">Art</button>
+                            <button class="category-btn" data-category="27">Animals</button>
+                            <button class="category-btn" data-category="28">Vehicles</button>
+                            <button class="category-btn" data-category="30">Gadgets</button>
+                        </div>
+                    </div>
+                    
+                    <h2 style="text-align: center; margin-bottom: 20px;">Choose Difficulty Level</h2>
+                    <div class="difficulty-options">
+                        <button class="difficulty-btn" data-difficulty="easy">
+                            <i class="fas fa-smile"></i>
+                            Easy
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="medium">
+                            <i class="fas fa-meh"></i>
+                            Medium
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="hard">
+                            <i class="fas fa-fire"></i>
+                            Hard
+                        </button>
+                        <button class="difficulty-btn" data-difficulty="random">
+                            <i class="fas fa-random"></i>
+                            Random Mix
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Quiz Screen -->
+                <div id="quiz-screen" class="screen">
+                    <div class="quiz-container">
+                        <div class="quiz-header">
+                            <div class="quiz-info">
+                                <div class="info-badge">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span id="question-counter">Question 1 of 10</span>
+                                </div>
+                                <div class="info-badge">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="timer">00:00</span>
+                                </div>
+                            </div>
+                            <div class="info-badge">
+                                <i class="fas fa-star"></i>
+                                <span id="score-display">Score: 0</span>
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress" class="progress" style="width: 10%"></div>
+                        </div>
+                        <div class="question-container">
+                            <span id="question-category" class="question-category">Category</span>
+                            <div id="question-text" class="question-text">Loading question...</div>
+                            <div id="answers-container" class="answers-container">
+                                <!-- Answers will be inserted here -->
+                            </div>
+                        </div>
+                        <div class="quiz-controls">
+                            <button id="quit-btn" class="btn btn-secondary">
+                                <i class="fas fa-home"></i> Quit Quiz
+                            </button>
+                            <button id="next-btn" class="btn btn-primary" disabled>
+                                Next <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Screen -->
+                <div id="results-screen" class="screen">
+                    <div class="results-container">
+                        <div class="score-circle" style="--score-percent: 0%">
+                            <div class="score-text">0%</div>
+                        </div>
+                        <h2 id="result-message" class="result-message">Result Message</h2>
+                        <p id="result-description" class="result-description">You scored X out of Y questions correctly.</p>
+                        
+                        <div class="result-stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="correct-answers">0</div>
+                                <div class="stat-label">Correct Answers</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="time-taken">00:00</div>
+                                <div class="stat-label">Time Taken</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="accuracy">0%</div>
+                                <div class="stat-label">Accuracy</div>
+                            </div>
+                        </div>
+                        
+                        <div class="result-actions">
+                            <button id="try-again-btn" class="btn btn-primary">
+                                <i class="fas fa-redo"></i> Try Again
+                            </button>
+                            <button id="new-quiz-btn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> New Quiz
+                            </button>
+                            <button id="home-btn" class="btn btn-secondary">
+                                <i class="fas fa-home"></i> Go to Home
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
